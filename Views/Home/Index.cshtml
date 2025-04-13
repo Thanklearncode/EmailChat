@@ -1,0 +1,182 @@
+﻿@{
+    Layout = "_Layout";  // Chỉ định sử dụng layout chung cho trang này
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f5f5; /* Light gray background */
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            width: 100%;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            width: 250px;
+            background-color: #282c34; /* Dark blue-gray for sidebar */
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+        }
+
+            .sidebar h2 {
+                font-size: 24px;
+                margin-bottom: 40px;
+            }
+
+            .sidebar a {
+                color: white;
+                font-size: 18px;
+                text-decoration: none;
+                margin: 20px 0;
+                display: block;
+                padding: 10px;
+                border-radius: 4px;
+                transition: background-color 0.3s;
+            }
+
+                .sidebar a:hover {
+                    background-color: #3c4043; /* Slightly lighter gray for hover */
+                }
+
+        /* Main content */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            background-color: white;
+            overflow-y: auto;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 30px;
+        }
+
+        /* Compose email form */
+        .email-form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+            .email-form h2 {
+                color: #333;
+                margin-bottom: 15px;
+            }
+
+            .email-form input, .email-form textarea {
+                width: 100%;
+                padding: 12px;
+                margin: 10px 0;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 16px;
+                transition: border-color 0.3s;
+            }
+
+                .email-form input:focus, .email-form textarea:focus {
+                    border-color: #4caf50; /* Greenish color for focus */
+                    outline: none;
+                }
+
+            .email-form button {
+                background-color: #4caf50;
+                color: white;
+                border: none;
+                padding: 12px;
+                width: 100%;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+                transition: background-color 0.3s;
+            }
+
+                .email-form button:hover {
+                    background-color: #45a049; /* Darker green on hover */
+                }
+
+        /* Inbox email list */
+        .email-list {
+            margin-top: 30px;
+        }
+
+        .email-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            background-color: #fafafa;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+            .email-item:hover {
+                background-color: #f0f0f0;
+            }
+
+            .email-item .email-info {
+                flex-grow: 1;
+                padding-right: 10px;
+            }
+
+                .email-item .email-info .email-subject {
+                    font-weight: bold;
+                }
+
+                .email-item .email-info .email-date {
+                    color: #888;
+                }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Email App</h2>
+            <a href="@Url.Action("Inbox", "Email")">Inbox</a>
+            <a href="@Url.Action("Compose", "Email")">Compose</a>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <h1>Welcome to the Email Chat Application</h1>
+
+            <!-- Compose Email Form -->
+            <div class="email-form">
+                <h2>Compose New Email</h2>
+                <form method="post" action="/Email/Compose">
+                    <input type="email" name="ToEmail" placeholder="Recipient Email" required>
+                    <input type="text" name="Subject" placeholder="Subject" required>
+                    <textarea name="Body" rows="6" placeholder="Write your message..." required></textarea>
+                    <button type="submit">Send Email</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

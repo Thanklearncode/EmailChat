@@ -1,0 +1,83 @@
+﻿@model MimeKit.MimeMessage
+
+@{
+    ViewData["Title"] = "Email Details";
+}
+
+<h2>Email Details</h2>
+
+<!-- Hiển thị thông tin email -->
+<div class="email-header">
+    <strong>From:</strong> @Model.From
+</div>
+<div class="email-header">
+    <strong>Subject:</strong> @Model.Subject
+</div>
+<div class="email-header">
+    <strong>Date:</strong> @Model.Date
+</div>
+
+<!-- Hiển thị nội dung email, kiểm tra xem có HTML body không -->
+<div class="email-body">
+    @if (!string.IsNullOrEmpty(Model.HtmlBody))
+    {
+        <div>@Html.Raw(Model.HtmlBody)</div>  <!-- Hiển thị HTML nếu có -->
+    }
+    else
+    {
+        <p>@Model.TextBody</p>  <!-- Nếu không có HTML, hiển thị TextBody -->
+    }
+</div>
+
+<!-- Nút quay lại Inbox -->
+<a href="@Url.Action("Inbox", "Email")">
+    <button>Back to Inbox</button>
+</a>
+
+<!-- CSS Styles -->
+<style>
+    {
+        font-size: 16px;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+        .email-header strong {
+            color: #0078d4; /* Màu xanh để làm nổi bật tiêu đề */
+        }
+
+    /* Chỉnh sửa phần nội dung Email */
+    .email-body {
+        margin-top: 20px;
+        font-size: 15px;
+        line-height: 1.6;
+        color: #444; /* Màu tối hơn một chút cho dễ đọc */
+        padding: 15px;
+        background-color: #f5f5f5; /* Màu nền nhẹ cho phần nội dung */
+        border-radius: 5px; /* Bo góc cho phần nội dung */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ nhẹ cho phần nội dung */
+    }
+
+    /* Tạo đường viền dưới cho mỗi phần email header */
+    .email-header {
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+    }
+
+    /* Tùy chỉnh nút quay lại Inbox */
+    button {
+        background-color: #0078d4;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-align: center;
+        font-size: 16px;
+        transition: background-color 0.3s ease;
+    }
+
+        button:hover {
+            background-color: #005a9e;
+        }
+</style>

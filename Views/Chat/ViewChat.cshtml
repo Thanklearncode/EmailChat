@@ -1,0 +1,119 @@
+﻿@{
+    ViewData["Title"] = "Chat with Assistant";
+}
+
+<div class="chat-container">
+    <div class="chat-box" id="chat-box">
+        <!-- Các tin nhắn sẽ được thêm vào đây -->
+    </div>
+    <div class="chat-input">
+        <textarea id="user-input" placeholder="Type your message..." rows="3"></textarea>
+        <button id="send-btn" onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<style>
+    /* CSS cho giao diện chat */
+    .chat-container {
+        width: 100%;
+        max-width: 600px;
+        margin: auto;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-box {
+        max-height: 400px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+    }
+
+    .chat-message {
+        margin: 10px 0;
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+    .user-message {
+        background-color: #d1e7ff;
+        text-align: left;
+    }
+
+    .ai-message {
+        background-color: #f1f1f1;
+        text-align: right;
+    }
+
+    .chat-input {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    textarea {
+        width: 80%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    button {
+        width: 18%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        button:hover {
+            background-color: #45a049;
+        }
+</style>
+
+<script>
+    function sendMessage() {
+        const userMessage = document.getElementById("user-input").value;
+        if (userMessage.trim() === "") {
+            alert("Please enter a message.");
+            return;  // Không gửi nếu tin nhắn trống
+        }
+
+        // Tiến hành gửi tin nhắn
+        addMessage(userMessage, "user");
+        document.getElementById("user-input").value = ""; // Clear input field
+        getAIResponse(userMessage);  // Gọi AI để nhận phản hồi
+    }
+
+
+    function addMessage(message, sender) {
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("chat-message", sender === "user" ? "user-message" : "ai-message");
+        messageElement.innerText = message;
+
+        const chatBox = document.getElementById("chat-box");
+        chatBox.appendChild(messageElement);
+        chatBox.scrollTop = chatBox.scrollHeight; // Cuộn xuống dưới cùng
+    }
+
+    function getAIResponse(userMessage) {
+        fetch("/chat/getResponse", {
+            method: "POST",  // Phương thức HTTP, ở đây là POST để gửi dữ liệu
+            headers: {
+                "Content-Type": "application/json"  // Xác định kiểu dữ liệu gửi đi là JSON
+            },
+            body: JSON.stringify({ message: userMessage })  // Chuyển đổi dữ liệu tin nhắn người dùng thành chuỗi JSON
+        })
+            .then(response => response.json())  // Chuyển đổi phản hồi nhận được từ server thành JSON
+            .then(data => {
+                addMessage(data.response, "ai");  // Hiển thị câu trả lời từ AI
+            })
+            .catch(error => {
+                console.error("Error:", error);  // Xử lý lỗi nếu có
+                addMessage("Sorry, I couldn't understand that.", "ai");
+            });
+    }
+
+</script>

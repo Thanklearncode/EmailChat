@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* Các kiểu CSS khác của bạn */
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* CSS cho chatbot */
+        .chat-container {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 300px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            display: none; /* Ẩn chatbot mặc định */
+        }
+
+        .chat-box {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .chat-message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .user-message {
+            background-color: #d1e7ff;
+            text-align: left;
+        }
+
+        .ai-message {
+            background-color: #f1f1f1;
+            text-align: right;
+        }
+
+        .chat-input {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        textarea {
+            width: 80%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 18%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #45a049;
+            }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- -->
+    </header>
+
+    <main>
+        @RenderBody() <!-- Render các trang con -->
+    </main>
+
+    <footer>
+        <!-- -->
+    </footer>
+
+    <!-- Chatbot HTML -->
+    <div class="chat-container" id="chat-container">
+        <div class="chat-box" id="chat-box">
+            <!-- Tin nhắn sẽ được thêm vào ở đây -->
+        </div>
+        <div class="chat-input">
+            <textarea id="user-input" placeholder="Type your message..." rows="3"></textarea>
+            <button id="send-btn" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- JavaScript cho chatbot -->
+    <script>
+        // Hàm gửi tin nhắn
+        function sendMessage() {
+            const userMessage = document.getElementById("user-input").value;
+            if (userMessage.trim() !== "") {
+                addMessage(userMessage, "user");
+                document.getElementById("user-input").value = ""; // Clear input field
+                getAIResponse(userMessage);
+            }
+        }
+
+        // Hàm thêm tin nhắn vào chat box
+        function addMessage(message, sender) {
+            const messageElement = document.createElement("div");
+            messageElement.classList.add("chat-message", sender === "user" ? "user-message" : "ai-message");
+            messageElement.innerText = message;
+
+            const chatBox = document.getElementById("chat-box");
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight; // Scroll đến cuối
+        }
+
+        // Hàm lấy phản hồi từ AI (GPT-3)
+        function getAIResponse(userMessage) {
+            fetch("/chat/getResponse", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message: userMessage })  // Gửi thông điệp người dùng tới backend
+            })
+                .then(response => response.json())
+                .then(data => {
+                    addMessage(data.response, "ai");
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    addMessage("Sorry, I couldn't understand that.", "ai");  // Trả lời mặc định nếu có lỗi
+                });
+        }
+
+
+        // Hiển thị chatbot khi trang đã tải xong
+        window.onload = function () {
+            document.getElementById("chat-container").style.display = "block";
+        };
+    </script>
+</body>
+</html>

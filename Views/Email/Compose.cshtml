@@ -1,0 +1,24 @@
+﻿@model EmailChatASP.Models.EmailRequest
+
+<h2>Compose Email</h2>
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+    
+<form method="post" action="/Email/Compose">
+    <input type="email" name="ToEmail" placeholder="Recipient Email" required />
+    <input type="text" name="Subject" placeholder="Subject" required />
+    <textarea name="Body" placeholder="Message Body" required></textarea>
+    <button type="submit">Send</button>
+</form>
+

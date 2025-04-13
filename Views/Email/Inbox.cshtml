@@ -1,0 +1,27 @@
+﻿@model List<MimeKit.MimeMessage>
+
+<h2>Inbox</h2>
+
+<div class="email-list">
+    @foreach (var email in Model)
+    {
+        <div class="email-item">
+            <div class="email-info">
+                <strong>Subject:</strong> @email.Subject
+                <div class="email-sender">
+                    <strong>From:</strong> @email.From
+                </div>
+                <div class="email-date">
+                    <strong>Date:</strong> @email.Date
+                </div>
+            </div>
+            <!-- Nút để đọc email -->
+            <div class="email-action">
+                <a href="@Url.Action("ReadEmail", "Email", new { messageId = email.MessageId })" onclick="showLoading()">
+                    <button>Read</button>
+                </a>
+
+            </div>
+        </div>
+    }
+</div>
