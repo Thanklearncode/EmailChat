@@ -1,83 +1,91 @@
 ﻿@model MimeKit.MimeMessage
-
 @{
     ViewData["Title"] = "Email Details";
+    Layout = "_Layout";
+
+    // ----- Helper Functions (Tương tự Inbox, để hiển thị From đẹp hơn) -----
+    Func<MimeKit.InternetAddressList, string> FormatAddressList = (list) =>
+    {
+        if (list == null || !list.Any()) return string.Empty;
+        return string.Join(", ", list.Mailboxes.Select(mb => !string.IsNullOrEmpty(mb.Name) ? $"{mb.Name} <{mb.Address}>" : mb.Address));
+    };
+
+    Func<MimeKit.InternetAddressList, string> GetFirstSenderAddress = (list) =>
+    {
+        if (list == null || !list.Any()) return string.Empty;
+        return list.Mailboxes.FirstOrDefault()?.Address ?? string.Empty;
+    };
+
+    Func<DateTimeOffset, string> FormatFullDateTime = (date) =>
+    {
+        // Ví dụ định dạng đầy đủ hơn: Thứ 5, 23 tháng 5 năm 2024 10:30:15
+        return date.LocalDateTime.ToString("dddd, dd MMMM yyyy HH:mm:ss", new System.Globalization.CultureInfo("vi-VN"));
+    };
+    // ----- End Helper Functions -----
 }
+@* Link đến file CSS mới *@
+<link href="~/css/ReadEmail.css" rel="stylesheet" />
 
-<h2>Email Details</h2>
+<div class="read-email-container">
+    <h2>@ViewData["Title"]</h2>
 
-<!-- Hiển thị thông tin email -->
-<div class="email-header">
-    <strong>From:</strong> @Model.From
-</div>
-<div class="email-header">
-    <strong>Subject:</strong> @Model.Subject
-</div>
-<div class="email-header">
-    <strong>Date:</strong> @Model.Date
-</div>
-
-<!-- Hiển thị nội dung email, kiểm tra xem có HTML body không -->
-<div class="email-body">
-    @if (!string.IsNullOrEmpty(Model.HtmlBody))
-    {
-        <div>@Html.Raw(Model.HtmlBody)</div>  <!-- Hiển thị HTML nếu có -->
-    }
-    else
-    {
-        <p>@Model.TextBody</p>  <!-- Nếu không có HTML, hiển thị TextBody -->
-    }
-</div>
-
-<!-- Nút quay lại Inbox -->
-<a href="@Url.Action("Inbox", "Email")">
-    <button>Back to Inbox</button>
-</a>
-
-<!-- CSS Styles -->
-<style>
-    {
-        font-size: 16px;
-        margin-bottom: 15px;
-        color: #333;
-    }
-
-        .email-header strong {
-            color: #0078d4; /* Màu xanh để làm nổi bật tiêu đề */
+    <!-- Hiển thị thông tin email header -->
+    <div class="email-header-section">
+        <div class="email-header-item">
+            <strong>From:</strong> @FormatAddressList(Model.From)
+        </div>
+        @if (Model.To != null && Model.To.Any())
+        {
+            <div class="email-header-item">
+                <strong>To:</strong> @FormatAddressList(Model.To)
+            </div>
         }
-
-    /* Chỉnh sửa phần nội dung Email */
-    .email-body {
-        margin-top: 20px;
-        font-size: 15px;
-        line-height: 1.6;
-        color: #444; /* Màu tối hơn một chút cho dễ đọc */
-        padding: 15px;
-        background-color: #f5f5f5; /* Màu nền nhẹ cho phần nội dung */
-        border-radius: 5px; /* Bo góc cho phần nội dung */
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Thêm bóng đổ nhẹ cho phần nội dung */
-    }
-
-    /* Tạo đường viền dưới cho mỗi phần email header */
-    .email-header {
-        border-bottom: 1px solid #ddd;
-        padding-bottom: 10px;
-    }
-
-    /* Tùy chỉnh nút quay lại Inbox */
-    button {
-        background-color: #0078d4;
-        color: white;
-        padding: 10px 15px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        text-align: center;
-        font-size: 16px;
-        transition: background-color 0.3s ease;
-    }
-
-        button:hover {
-            background-color: #005a9e;
+        @if (Model.Cc != null && Model.Cc.Any())
+        {
+            <div class="email-header-item">
+                <strong>Cc:</strong> @FormatAddressList(Model.Cc)
+            </div>
         }
-</style>
+        <div class="email-header-item">
+            <strong>Date:</strong> @FormatFullDateTime(Model.Date)
+        </div>
+        <div class="email-header-item">
+            <strong>Subject:</strong> @Model.Subject
+        </div>
+    </div>
+
+    <!-- Hiển thị nội dung email -->
+    <div class="email-body">
+        @if (!string.IsNullOrEmpty(Model.HtmlBody))
+        {
+            @Html.Raw(Model.HtmlBody) @* Hiển thị HTML an toàn *@
+        }
+        else if (!string.IsNullOrEmpty(Model.TextBody))
+        {
+            <pre style="white-space: pre-wrap; word-wrap: break-word; font-family: inherit;">@Model.TextBody</pre> @* Hiển thị TextBody, giữ nguyên xuống dòng và khoảng trắng *@
+        }
+        else
+        {
+            <p><i>[This email has no content]</i></p>
+        }
+    </div>
+
+    <!-- Các nút hành động -->
+    <div class="email-actions">
+        @* Nút Back to Inbox *@
+        <a href="@Url.Action("Inbox", "Email")" class="btn-action">
+            Back to Inbox
+        </a>
+
+        @* Nút Reply *@
+        <a href="@Url.Action("Compose", "Email", new {
+                    replyTo = GetFirstSenderAddress(Model.From),
+                    subject = (Model.Subject?.StartsWith("Re:", StringComparison.OrdinalIgnoreCase) ?? false ? Model.Subject : "Re: " + Model.Subject)
+                 })"
+           class="btn-action">
+            Reply
+        </a>
+
+        @* Bạn có thể thêm nút Reply All hoặc Forward ở đây nếu muốn *@
+    </div>
+</div>

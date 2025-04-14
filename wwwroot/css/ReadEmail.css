@@ -1,0 +1,109 @@
+﻿/* === CSS cho Trang Đọc Email (ReadEmail) === */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f8f9fa;
+    color: #202124;
+}
+
+/* Container chính (tùy chọn, nếu muốn bao bọc) */
+.read-email-container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 25px 30px;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 2px 6px 2px rgba(60,64,67,.15);
+}
+
+    .read-email-container h2 {
+        font-weight: normal;
+        color: #202124;
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-size: 1.6em;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+
+/* Phần header chứa thông tin From, Subject, Date */
+.email-header-section {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee; /* Đường kẻ nhẹ giữa header và body */
+    font-size: 0.9rem;
+    color: #5f6368; /* Màu xám cho header */
+}
+
+.email-header-item {
+    margin-bottom: 8px; /* Khoảng cách giữa các dòng header */
+}
+
+    .email-header-item strong {
+        font-weight: 500;
+        color: #3c4043; /* Màu hơi đậm hơn cho label (From, Subject) */
+        min-width: 70px; /* Đảm bảo label thẳng hàng */
+        display: inline-block; /* Để min-width hoạt động */
+    }
+
+/* Phần nội dung email */
+.email-body {
+    margin-top: 20px;
+    margin-bottom: 30px; /* Khoảng cách trước nút bấm */
+    font-size: 1rem; /* Cỡ chữ nội dung ~16px */
+    line-height: 1.6;
+    color: #202124; /* Màu chữ đen cho nội dung */
+    word-wrap: break-word; /* Tự động xuống dòng nếu chữ quá dài */
+}
+    /* Đảm bảo các thẻ p bên trong body có margin hợp lý */
+    .email-body p {
+        margin-top: 0;
+        margin-bottom: 1em;
+    }
+
+/* Container cho các nút hành động (Back, Reply) */
+.email-actions {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0; /* Đường kẻ trên nút */
+    text-align: left; /* Căn nút sang trái (hoặc right) */
+}
+
+/* Định dạng chung cho các nút hành động */
+.btn-action {
+    display: inline-block;
+    font-weight: 500;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-color: #f8f9fa; /* NỀN XÁM RẤT NHẸ */
+    border: 1px solid #dadce0; /* Viền xám mờ */
+    padding: 8px 18px; /* Padding nút */
+    font-size: 0.875rem; /* ~14px */
+    line-height: 1.5;
+    border-radius: 4px;
+    color: #3c4043; /* CHỮ ĐEN/XÁM ĐẬM */
+    text-decoration: none; /* Quan trọng nếu dùng thẻ <a> */
+    margin-right: 10px; /* Khoảng cách giữa các nút */
+    transition: background-color .15s ease-in-out, border-color .15s ease-in-out, color .15s ease-in-out;
+}
+
+/* Nút cuối cùng không cần margin phải */
+.email-actions .btn-action:last-child {
+    margin-right: 0;
+}
+
+.btn-action:hover {
+    background-color: #f1f3f4;
+    border-color: #c6cacf;
+    color: #202124;
+    text-decoration: none;
+}
+
+.btn-action:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(218, 220, 224, 0.5);
+}

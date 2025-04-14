@@ -1,27 +1,91 @@
 ﻿@model List<MimeKit.MimeMessage>
+@{
+    Layout = "_Layout";
+
+    // ----- Helper Functions (Giữ nguyên hoặc cải tiến nếu muốn) -----
+    Func<MimeKit.InternetAddressList, string> FormatSender = (fromList) =>
+    {
+        if (fromList == null || !fromList.Any()) return "Unknown Sender";
+        var sender = fromList.Mailboxes.FirstOrDefault();
+        if (sender == null) return fromList.ToString();
+        return !string.IsNullOrEmpty(sender.Name) ? sender.Name : sender.Address;
+    };
+
+    Func<DateTimeOffset, string> FormatDisplayDate = (date) =>
+    {
+        var localDate = date.LocalDateTime;
+        if (localDate.Date == DateTime.Today)
+        {
+            return localDate.ToString("HH:mm");
+        }
+        else if (localDate.Year == DateTime.Now.Year)
+        {
+            // Định dạng tiếng Việt: "dd 'thg' M" -> "20 thg 5"
+            return localDate.ToString("dd 'thg' M", new System.Globalization.CultureInfo("vi-VN"));
+        }
+        else
+        {
+            return localDate.ToString("dd/MM/yyyy"); // Định dạng ngày/tháng/năm
+        }
+    };
+    // ----- End Helper Functions -----
+}
+@* Đảm bảo link tới ĐÚNG file CSS bạn sẽ chỉnh sửa *@
+<link href="~/css/Inbox.css" rel="stylesheet" /> @* Đổi tên file nếu cần *@
 
 <h2>Inbox</h2>
 
-<div class="email-list">
-    @foreach (var email in Model)
+<div class="email-list-container">
+    @* Thêm container để dễ quản lý hơn *@
+    @if (Model != null && Model.Any())
     {
-        <div class="email-item">
-            <div class="email-info">
-                <strong>Subject:</strong> @email.Subject
-                <div class="email-sender">
-                    <strong>From:</strong> @email.From
+        @foreach (var email in Model)
+        {
+            @* Button đại diện cho một hàng email *@
+            <button type="button" class="email-row-button"
+                    data-url="@Url.Action("ReadEmail", "Email", new { messageId = email.MessageId })">
+                <div class="email-row-content">
+                    @* Đổi tên class cho rõ ràng *@
+                    <div class="email-sender" title="@email.From">
+                        @FormatSender(email.From)
+                    </div>
+                    <div class="email-subject" title="@email.Subject">
+                        @email.Subject
+                    </div>
+                    <div class="email-date">
+                        @FormatDisplayDate(email.Date)
+                    </div>
                 </div>
-                <div class="email-date">
-                    <strong>Date:</strong> @email.Date
-                </div>
-            </div>
-            <!-- Nút để đọc email -->
-            <div class="email-action">
-                <a href="@Url.Action("ReadEmail", "Email", new { messageId = email.MessageId })" onclick="showLoading()">
-                    <button>Read</button>
-                </a>
-
-            </div>
-        </div>
+            </button>
+        }
+    }
+    else
+    {
+        <p>Hộp thư đến trống.</p>
     }
 </div>
+
+@* Phần Chatbox giữ nguyên nếu cần *@
+<div class="chat-container">
+    <input type="text" placeholder="Type your message..." />
+    <button>Send</button>
+</div>
+
+@section Scripts {
+    <script>
+        // JavaScript giữ nguyên để xử lý click
+        document.addEventListener('DOMContentLoaded', function () {
+            const emailButtons = document.querySelectorAll('.email-row-button');
+            emailButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const url = this.dataset.url;
+                    if (url) {
+                        window.location.href = url;
+                    } else {
+                        console.error('Email URL not found for this button.');
+                    }
+                });
+            });
+        });
+    </script>
+}

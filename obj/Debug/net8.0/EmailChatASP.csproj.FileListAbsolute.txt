@@ -36,3 +36,4 @@ D:\7.BAI_NOP_BTL\EmailChatASP\EmailChatASP\obj\Debug\net8.0\EmailChatASP.pdb
 D:\7.BAI_NOP_BTL\EmailChatASP\EmailChatASP\obj\Debug\net8.0\EmailChatASP.genruntimeconfig.cache
 D:\7.BAI_NOP_BTL\EmailChatASP\EmailChatASP\obj\Debug\net8.0\ref\EmailChatASP.dll
 D:\7.BAI_NOP_BTL\EmailChatASP\EmailChatASP\bin\Debug\net8.0\Newtonsoft.Json.dll
+D:\7.BAI_NOP_BTL\EmailChatASP\EmailChatASP\obj\Debug\net8.0\EmailChatASP.sourcelink.json

@@ -15,10 +15,29 @@ public class EmailController : Controller
     }
 
     // Action Soạn email mới
-    [HttpGet]
-    public IActionResult Compose()
+    //[HttpGet]
+    //public IActionResult Compose()
+    //{
+    //    return View();
+    //}
+    [HttpGet] // Action để hiển thị form Compose
+    public IActionResult Compose(string replyTo = null, string subject = null) // Thêm các tham số tùy chọn
     {
-        return View();
+        var model = new EmailRequest(); // Tạo model mới
+
+        // Nếu có tham số replyTo từ nút Reply, gán vào ToEmail
+        if (!string.IsNullOrEmpty(replyTo))
+        {
+            model.ToEmail = replyTo;
+        }
+
+        // Nếu có tham số subject từ nút Reply, gán vào Subject
+        if (!string.IsNullOrEmpty(subject))
+        {
+            model.Subject = subject;
+        }
+
+        return View(model); // Trả về View với model đã có thể được điền sẵn
     }
 
     // Action gửi email

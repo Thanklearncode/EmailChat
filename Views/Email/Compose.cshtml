@@ -1,24 +1,55 @@
 ﻿@model EmailChatASP.Models.EmailRequest
-
-<h2>Compose Email</h2>
-@if (TempData["SuccessMessage"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["SuccessMessage"]
-    </div>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Compose Email"; // Đặt tiêu đề trang
 }
+@* Link đến file CSS mới cho trang Compose *@
+<link href="~/css/Compose.css" rel="stylesheet" />
 
-@if (TempData["ErrorMessage"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["ErrorMessage"]
-    </div>
-}
-    
-<form method="post" action="/Email/Compose">
-    <input type="email" name="ToEmail" placeholder="Recipient Email" required />
-    <input type="text" name="Subject" placeholder="Subject" required />
-    <textarea name="Body" placeholder="Message Body" required></textarea>
-    <button type="submit">Send</button>
-</form>
+<div class="compose-container">
+    @* Container chính *@
+    <h2>@ViewData["Title"]</h2>
 
+    @* Hiển thị thông báo thành công/lỗi nếu có *@
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <form method="post" action="@Url.Action("Compose", "Email")">
+        @* Dùng Url.Action để an toàn hơn *@
+
+        <div class="form-group">
+            <label asp-for="ToEmail">Recipient Email</label> @* Label cho người nhận *@
+            <input asp-for="ToEmail" type="email" class="form-control" placeholder="Enter recipient email" required />
+            @* Hiển thị lỗi validation nếu có (tùy chọn) *@
+            @* <span asp-validation-for="ToEmail" class="text-danger"></span> *@
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Subject">Subject</label> @* Label cho chủ đề *@
+            <input asp-for="Subject" type="text" class="form-control" placeholder="Enter subject" required />
+            @* <span asp-validation-for="Subject" class="text-danger"></span> *@
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Body">Message Body</label> @* Label cho nội dung *@
+            <textarea asp-for="Body" class="form-control" placeholder="Write your message here..." rows="10" required></textarea> @* Thêm rows để cao hơn *@
+            @* <span asp-validation-for="Body" class="text-danger"></span> *@
+        </div>
+
+        <div class="form-group form-actions">
+            @* Div riêng cho nút bấm *@
+            <button type="submit" class="btn btn-send">Send</button>
+        </div>
+
+    </form>
+</div>

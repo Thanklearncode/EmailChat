@@ -1,0 +1,125 @@
+﻿/* === CSS cho Trang Soạn Thư (Compose) === */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f8f9fa; /* Màu nền trang nếu muốn */
+    color: #202124; /* Màu chữ mặc định */
+}
+
+/* Container chính của trang soạn thư */
+.compose-container {
+    max-width: 800px; /* Giới hạn chiều rộng */
+    margin: 30px auto; /* Căn giữa và tạo khoảng cách trên dưới */
+    padding: 25px 30px; /* Padding bên trong */
+    background-color: #ffffff; /* Nền trắng */
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px 0 rgba(60,64,67,.3), 0 2px 6px 2px rgba(60,64,67,.15); /* Đổ bóng rõ hơn */
+}
+
+    .compose-container h2 {
+        font-weight: normal;
+        color: #202124;
+        margin-top: 0;
+        margin-bottom: 25px;
+        font-size: 1.6em;
+        border-bottom: 1px solid #e0e0e0; /* Đường kẻ dưới tiêu đề */
+        padding-bottom: 15px;
+    }
+
+/* Định dạng chung cho các nhóm form (label + input) */
+.form-group {
+    margin-bottom: 20px; /* Khoảng cách giữa các trường */
+}
+
+    .form-group label {
+        display: block; /* Label chiếm một hàng riêng */
+        margin-bottom: 8px; /* Khoảng cách dưới label */
+        font-weight: 500;
+        font-size: 0.9rem; /* Cỡ chữ label */
+        color: #5f6368; /* Màu chữ label */
+    }
+
+/* Định dạng chung cho input và textarea */
+.form-control {
+    display: block;
+    width: 100%; /* Chiếm hết chiều rộng */
+    padding: 10px 12px; /* Padding bên trong input */
+    font-size: 0.95rem; /* Cỡ chữ nhập liệu */
+    line-height: 1.5;
+    color: #202124; /* Màu chữ nhập */
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #dadce0; /* Viền mờ */
+    border-radius: 4px; /* Bo góc nhẹ */
+    box-sizing: border-box; /* Quan trọng khi có padding + width 100% */
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+    .form-control:focus {
+        border-color: #8ab4f8; /* Màu viền khi focus giống Google */
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(26, 115, 232, 0.25); /* Bóng mờ khi focus */
+    }
+
+textarea.form-control {
+    resize: vertical; /* Chỉ cho phép thay đổi chiều cao */
+    min-height: 150px; /* Chiều cao tối thiểu cho textarea */
+}
+
+/* Định dạng cho khu vực chứa nút bấm */
+.form-actions {
+    margin-top: 30px; /* Khoảng cách trên nút bấm */
+    text-align: right; /* Căn nút sang phải (hoặc left nếu muốn) */
+}
+
+/* Định dạng cho nút Send */
+.btn-send {
+    display: inline-block; /* Để không chiếm hết hàng */
+    font-weight: 500;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none; /* Ngăn chọn text trên nút */
+    background-color: #f8f9fa; /* MÀU NỀN XÁM RẤT NHẸ */
+    border: 1px solid #dadce0; /* Viền xám mờ */
+    padding: 8px 20px; /* Padding cho nút */
+    font-size: 0.9rem;
+    line-height: 1.5;
+    border-radius: 4px;
+    color: #3c4043; /* MÀU CHỮ ĐEN/XÁM ĐẬM */
+    transition: background-color .15s ease-in-out, border-color .15s ease-in-out, color .15s ease-in-out;
+}
+
+    .btn-send:hover {
+        background-color: #f1f3f4; /* Nền hơi đậm hơn khi hover */
+        border-color: #c6cacf;
+        color: #202124; /* Chữ đậm hơn khi hover */
+    }
+
+    .btn-send:focus {
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(218, 220, 224, 0.5); /* Bóng mờ khi focus nút */
+    }
+
+
+/* Định dạng cho thông báo TempData (giống Bootstrap) */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.alert-success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+}

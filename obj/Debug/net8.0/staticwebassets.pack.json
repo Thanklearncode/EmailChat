@@ -5,6 +5,18 @@
       "PackagePath": "staticwebassets\\EmailChatASP.bundle.scp.css"
     },
     {
+      "Id": "D:\\7.BAI_NOP_BTL\\EmailChatASP\\EmailChatASP\\wwwroot\\css\\Compose.css",
+      "PackagePath": "staticwebassets\\css\\Compose.css"
+    },
+    {
+      "Id": "D:\\7.BAI_NOP_BTL\\EmailChatASP\\EmailChatASP\\wwwroot\\css\\Inbox.css",
+      "PackagePath": "staticwebassets\\css\\Inbox.css"
+    },
+    {
+      "Id": "D:\\7.BAI_NOP_BTL\\EmailChatASP\\EmailChatASP\\wwwroot\\css\\ReadEmail.css",
+      "PackagePath": "staticwebassets\\css\\ReadEmail.css"
+    },
+    {
       "Id": "D:\\7.BAI_NOP_BTL\\EmailChatASP\\EmailChatASP\\wwwroot\\css\\Style.css",
       "PackagePath": "staticwebassets\\css\\Style.css"
     },
