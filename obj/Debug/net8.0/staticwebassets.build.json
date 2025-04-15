@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "10dG4QcPL/QJsUyBWg4sc6fiNWw/mO3PKAi5yCF/Ksc=",
+  "Hash": "RuJGi/9Xzts7y9BYzgwCR3GllVWt5+7eHL+njlFgGgk=",
   "Source": "EmailChatASP",
   "BasePath": "_content/EmailChatASP",
   "Mode": "Default",
@@ -91,6 +91,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\Inbox.css"
+    },
+    {
+      "Identity": "D:\\7.BAI_NOP_BTL\\EmailChatASP\\EmailChatASP\\wwwroot\\css\\Index.css",
+      "SourceId": "EmailChatASP",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\7.BAI_NOP_BTL\\EmailChatASP\\EmailChatASP\\wwwroot\\",
+      "BasePath": "_content/EmailChatASP",
+      "RelativePath": "css/Index.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\Index.css"
     },
     {
       "Identity": "D:\\7.BAI_NOP_BTL\\EmailChatASP\\EmailChatASP\\wwwroot\\css\\ReadEmail.css",

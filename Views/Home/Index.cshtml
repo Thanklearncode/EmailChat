@@ -1,182 +1,76 @@
 ﻿@{
-    Layout = "_Layout";  // Chỉ định sử dụng layout chung cho trang này
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Compose New Email";
+    Layout = "_Layout";
+    // Layout được áp dụng tự động từ _ViewStart hoặc _Layout mặc định
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f5f5f5; /* Light gray background */
-            margin: 0;
-            padding: 0;
-        }
+@* Liên kết đến file CSS riêng cho trang Index này *@
+@section Head {
+    <link rel="stylesheet" href="~/css/Index.css" asp-append-version="true" />
+    @* Thêm Font Awesome nếu layout chưa có hoặc bạn muốn chắc chắn *@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+}
 
-        .container {
-            display: flex;
-            height: 100vh;
-            width: 100%;
-        }
+@* --- BẮT ĐẦU NỘI DUNG CHÍNH CỦA TRANG INDEX --- *@
+@* Container riêng cho bố cục của trang này *@
+<div class="home-index-container">
 
-        /* Sidebar styling */
-        .sidebar {
-            width: 250px;
-            background-color: #282c34; /* Dark blue-gray for sidebar */
-            color: white;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-            box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
-        }
-
-            .sidebar h2 {
-                font-size: 24px;
-                margin-bottom: 40px;
-            }
-
-            .sidebar a {
-                color: white;
-                font-size: 18px;
-                text-decoration: none;
-                margin: 20px 0;
-                display: block;
-                padding: 10px;
-                border-radius: 4px;
-                transition: background-color 0.3s;
-            }
-
-                .sidebar a:hover {
-                    background-color: #3c4043; /* Slightly lighter gray for hover */
-                }
-
-        /* Main content */
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            background-color: white;
-            overflow-y: auto;
-        }
-
-        h1 {
-            color: #333;
-            font-size: 30px;
-        }
-
-        /* Compose email form */
-        .email-form {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-            .email-form h2 {
-                color: #333;
-                margin-bottom: 15px;
-            }
-
-            .email-form input, .email-form textarea {
-                width: 100%;
-                padding: 12px;
-                margin: 10px 0;
-                border: 1px solid #ddd;
-                border-radius: 4px;
-                font-size: 16px;
-                transition: border-color 0.3s;
-            }
-
-                .email-form input:focus, .email-form textarea:focus {
-                    border-color: #4caf50; /* Greenish color for focus */
-                    outline: none;
-                }
-
-            .email-form button {
-                background-color: #4caf50;
-                color: white;
-                border: none;
-                padding: 12px;
-                width: 100%;
-                border-radius: 4px;
-                cursor: pointer;
-                font-size: 16px;
-                transition: background-color 0.3s;
-            }
-
-                .email-form button:hover {
-                    background-color: #45a049; /* Darker green on hover */
-                }
-
-        /* Inbox email list */
-        .email-list {
-            margin-top: 30px;
-        }
-
-        .email-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            background-color: #fafafa;
-            border-radius: 4px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-            .email-item:hover {
-                background-color: #f0f0f0;
-            }
-
-            .email-item .email-info {
-                flex-grow: 1;
-                padding-right: 10px;
-            }
-
-                .email-item .email-info .email-subject {
-                    font-weight: bold;
-                }
-
-                .email-item .email-info .email-date {
-                    color: #888;
-                }
-
-    </style>
-</head>
-<body>
-
-    <div class="container">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <h2>Email App</h2>
-            <a href="@Url.Action("Inbox", "Email")">Inbox</a>
-            <a href="@Url.Action("Compose", "Email")">Compose</a>
-        </div>
-
-        <!-- Main Content -->
-        <div class="main-content">
-            <h1>Welcome to the Email Chat Application</h1>
-
-            <!-- Compose Email Form -->
-            <div class="email-form">
-                <h2>Compose New Email</h2>
-                <form method="post" action="/Email/Compose">
-                    <input type="email" name="ToEmail" placeholder="Recipient Email" required>
-                    <input type="text" name="Subject" placeholder="Subject" required>
-                    <textarea name="Body" rows="6" placeholder="Write your message..." required></textarea>
-                    <button type="submit">Send Email</button>
-                </form>
-            </div>
-        </div>
+    @* Sidebar điều hướng cho chức năng Email trên trang này *@
+    <div class="index-sidebar">
+        <div class="index-sidebar-title">Email Actions</div> @* Tiêu đề nhỏ cho sidebar này *@
+        <nav class="index-sidebar-nav">
+            <a asp-action="Index" asp-controller="Home" class="nav-link active">
+                @* Đánh dấu Compose (Home) là active *@
+                <i class="fas fa-pen fa-fw"></i>Compose
+            </a>
+            <a asp-action="Inbox" asp-controller="Email" class="nav-link">
+                @* Link đến Inbox thật *@
+                <i class="fas fa-inbox fa-fw"></i>Inbox
+            </a>
+            @* Thêm các link khác nếu cần (Sent, Drafts...) *@
+        </nav>
     </div>
 
-</body>
-</html>
+    @* Vùng nội dung chính hiển thị form Compose *@
+    <div class="index-main-content">
+        <h1><i class="fas fa-pen"></i> Compose New Email</h1>
+        <hr class="index-hr" /> @* Dùng class riêng nếu cần style khác hr chung *@
+
+        @* Hiển thị thông báo TempData *@
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success index-alert">@TempData["SuccessMessage"]</div>
+        }
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <div class="alert alert-danger index-alert">@TempData["ErrorMessage"]</div>
+        }
+
+        @* Form soạn thư *@
+        <div class="email-compose-form">
+            <form method="post" asp-controller="Email" asp-action="Compose">
+                <div class="form-group mb-3">
+                    <label for="toEmail" class="form-label">To:</label>
+                    <input type="email" id="toEmail" name="ToEmail" class="form-control" placeholder="Recipient@example.com" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="subject" class="form-label">Subject:</label>
+                    <input type="text" id="subject" name="Subject" class="form-control" placeholder="Subject" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="body" class="form-label">Message:</label>
+                    @* Thêm class riêng cho textarea này để tránh xung đột với chatbot *@
+                    <textarea id="body" name="Body" class="form-control email-body-textarea" rows="10" placeholder="Write your message here..." required></textarea>
+                </div>
+                <div class="d-grid gap-2">
+                    @* Thêm class riêng cho button này để tránh xung đột với chatbot *@
+                    <button type="submit" class="btn btn-primary btn-lg email-send-button">
+                        <i class="fas fa-paper-plane me-2"></i>Send Email
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div> @* Kết thúc index-main-content *@
+
+</div> @* Kết thúc home-index-container *@
+@* --- KẾT THÚC NỘI DUNG CHÍNH CỦA TRANG INDEX --- *@

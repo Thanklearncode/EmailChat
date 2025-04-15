@@ -1,0 +1,181 @@
+﻿/* ============================================ */
+/*    Styles ONLY for Views/Home/Index.cshtml   */
+/*    (home-index-styles.css)                 */
+/* ============================================ */
+
+/* Container chính cho trang Index, dùng Flexbox */
+.home-index-container {
+    display: flex;
+    width: 100%;
+    min-height: calc(100vh - 100px); /* Tính toán chiều cao trừ đi header/footer ước tính nếu có */
+    /* Hoặc đơn giản là để nó tự nhiên theo nội dung */
+    background-color: #f0f2f5; /* Một màu nền nhẹ cho khu vực này */
+    border-radius: 5px; /* Bo góc nhẹ nếu muốn */
+    overflow: hidden; /* Đảm bảo các thành phần con không tràn ra ngoài */
+}
+
+/* Sidebar riêng cho trang Index */
+.index-sidebar {
+    width: 220px; /* Có thể nhỏ hơn sidebar layout chính nếu muốn */
+    background-color: #ffffff; /* Nền trắng */
+    border-right: 1px solid #dee2e6; /* Đường kẻ phân cách */
+    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+    .index-sidebar .index-sidebar-title {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #6c757d; /* Màu xám */
+        text-transform: uppercase;
+        padding: 10px 15px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    .index-sidebar .index-sidebar-nav {
+        flex-grow: 1;
+    }
+
+    .index-sidebar .nav-link {
+        color: #343a40; /* Màu text tối */
+        font-size: 0.95rem;
+        text-decoration: none;
+        padding: 10px 15px;
+        display: flex;
+        align-items: center;
+        transition: background-color 0.2s ease, color 0.2s ease;
+        border-left: 3px solid transparent; /* Border trái để chỉ active */
+    }
+
+        .index-sidebar .nav-link i.fa-fw {
+            width: 1.2em;
+            margin-right: 8px;
+            text-align: center;
+            color: #495057; /* Màu icon */
+        }
+
+        .index-sidebar .nav-link:hover {
+            background-color: #e9ecef; /* Màu nền khi hover */
+            color: #0056b3; /* Màu chữ khi hover */
+        }
+
+            .index-sidebar .nav-link:hover i {
+                color: #0056b3;
+            }
+
+
+        .index-sidebar .nav-link.active {
+            background-color: #e7f1ff; /* Màu nền active nhẹ */
+            color: #0d6efd; /* Màu chữ active */
+            font-weight: 500;
+            border-left-color: #0d6efd; /* Màu border active */
+        }
+
+            .index-sidebar .nav-link.active i {
+                color: #0d6efd;
+            }
+
+
+/* Vùng nội dung chính của trang Index */
+.index-main-content {
+    flex-grow: 1;
+    padding: 20px 25px;
+    background-color: #ffffff; /* Nền trắng */
+    overflow-y: auto;
+}
+
+    /* H1 trong vùng nội dung này */
+    .index-main-content h1 {
+        color: #343a40;
+        font-size: 1.6rem; /* Hơi nhỏ hơn h1 layout chính */
+        font-weight: 500;
+        margin-top: 0;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #e9ecef;
+    }
+
+        .index-main-content h1 i {
+            margin-right: 10px;
+            color: #0d6efd; /* Màu icon khác */
+        }
+
+    /* HR trong vùng nội dung này */
+    .index-main-content .index-hr {
+        border: 0;
+        height: 1px;
+        background-color: #e9ecef; /* Màu nhạt hơn */
+        margin: 1rem 0 1.5rem 0; /* Khoảng cách khác */
+    }
+
+/* Alert riêng cho trang Index (nếu cần style khác alert chung) */
+.index-alert {
+    /* Thêm hoặc ghi đè style nếu cần */
+    /* Ví dụ: border-radius: 0; */
+}
+
+
+/* ============================================ */
+/*   Styles RIÊNG cho Form Compose trong Index  */
+/* ============================================ */
+
+.email-compose-form {
+    /* Không cần background/border nếu index-main-content đã có */
+    margin-top: 15px;
+}
+
+    /* Style cho các thành phần form sử dụng class riêng để tránh xung đột */
+    .email-compose-form .form-label {
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: #495057;
+    }
+
+    .email-compose-form .form-control { /* Áp dụng cho input và textarea có class form-control */
+        border-radius: 4px;
+        border: 1px solid #ced4da;
+        padding: 0.75rem 1rem; /* Padding lớn hơn một chút */
+        font-size: 1rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+
+        .email-compose-form .form-control:focus {
+            border-color: #86b7fe;
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+            outline: 0;
+        }
+
+    /* Style riêng cho textarea của form compose */
+    .email-compose-form textarea.email-body-textarea {
+        min-height: 200px; /* Chiều cao khác */
+        line-height: 1.6;
+        resize: vertical;
+    }
+
+    /* Style riêng cho nút gửi của form compose */
+    .email-compose-form button.email-send-button {
+        /* Kế thừa từ .btn .btn-primary .btn-lg nếu dùng Bootstrap */
+        /* Hoặc tự định nghĩa hoàn toàn */
+        font-weight: 500;
+        padding: 0.75rem 1.5rem;
+    }
+
+        .email-compose-form button.email-send-button i {
+            /* Đảm bảo icon căn chỉnh đúng */
+        }
+
+    /* Ghi đè style bootstrap nếu cần */
+    .email-compose-form .form-control-lg { /* Ví dụ ghi đè padding */
+        padding: 0.75rem 1rem;
+        font-size: 1rem; /* Reset lại font-size nếu muốn */
+    }
+
+    .email-compose-form .btn-lg {
+        padding: 0.75rem 1.5rem;
+        font-size: 1.1rem;
+    }
+
+/* --- KHÔNG CÓ CSS CHO CHATBOT Ở ĐÂY --- */

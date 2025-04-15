@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\css\\Inbox.css"
     },
     {
+      "Id": "D:\\7.BAI_NOP_BTL\\EmailChatASP\\EmailChatASP\\wwwroot\\css\\Index.css",
+      "PackagePath": "staticwebassets\\css\\Index.css"
+    },
+    {
       "Id": "D:\\7.BAI_NOP_BTL\\EmailChatASP\\EmailChatASP\\wwwroot\\css\\ReadEmail.css",
       "PackagePath": "staticwebassets\\css\\ReadEmail.css"
     },

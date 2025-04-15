@@ -1,8 +1,9 @@
 ﻿@model List<MimeKit.MimeMessage>
 @{
     Layout = "_Layout";
+    ViewData["Title"] = "Inbox"; // Đặt tiêu đề trang
 
-    // ----- Helper Functions (Giữ nguyên hoặc cải tiến nếu muốn) -----
+    // ----- Helper Functions (Giữ nguyên) -----
     Func<MimeKit.InternetAddressList, string> FormatSender = (fromList) =>
     {
         if (fromList == null || !fromList.Any()) return "Unknown Sender";
@@ -20,23 +21,27 @@
         }
         else if (localDate.Year == DateTime.Now.Year)
         {
-            // Định dạng tiếng Việt: "dd 'thg' M" -> "20 thg 5"
             return localDate.ToString("dd 'thg' M", new System.Globalization.CultureInfo("vi-VN"));
         }
         else
         {
-            return localDate.ToString("dd/MM/yyyy"); // Định dạng ngày/tháng/năm
+            return localDate.ToString("dd/MM/yyyy");
         }
     };
     // ----- End Helper Functions -----
 }
-@* Đảm bảo link tới ĐÚNG file CSS bạn sẽ chỉnh sửa *@
-<link href="~/css/Inbox.css" rel="stylesheet" /> @* Đổi tên file nếu cần *@
+@* Link đến file CSS của Inbox *@
+<link href="~/css/Inbox.css" rel="stylesheet" />
 
-<h2>Inbox</h2>
+@* Container cho tiêu đề và nút Compose *@
+<h2>@ViewData["Title"]</h2>
+
 
 <div class="email-list-container">
-    @* Thêm container để dễ quản lý hơn *@
+
+  @*   <a href="@Url.Action("Compose", "Email")" class="btn-compose compose-button-top-right">
+        Compose
+    </a> *@
     @if (Model != null && Model.Any())
     {
         @foreach (var email in Model)
@@ -45,7 +50,6 @@
             <button type="button" class="email-row-button"
                     data-url="@Url.Action("ReadEmail", "Email", new { messageId = email.MessageId })">
                 <div class="email-row-content">
-                    @* Đổi tên class cho rõ ràng *@
                     <div class="email-sender" title="@email.From">
                         @FormatSender(email.From)
                     </div>
@@ -65,15 +69,15 @@
     }
 </div>
 
-@* Phần Chatbox giữ nguyên nếu cần *@
+@* Phần Chatbox giữ nguyên *@
 <div class="chat-container">
     <input type="text" placeholder="Type your message..." />
     <button>Send</button>
 </div>
 
+@* Section Scripts giữ nguyên *@
 @section Scripts {
     <script>
-        // JavaScript giữ nguyên để xử lý click
         document.addEventListener('DOMContentLoaded', function () {
             const emailButtons = document.querySelectorAll('.email-row-button');
             emailButtons.forEach(button => {

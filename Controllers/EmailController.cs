@@ -70,7 +70,7 @@ public class EmailController : Controller
         try
         {
             // Đảm bảo phương thức đọc email không bị treo
-            var emails = await _emailService.ReadEmailsAsync(10, 1);
+            var emails = await _emailService.ReadEmailsAsync(15, 1);
             return View(emails);  // Trả về view với danh sách email
         }
         catch (Exception ex)
